@@ -40,14 +40,39 @@ def get_xml_for_convert(figure: str, size: str, color: str) -> str:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "figure", help="Выберите фигуру, доступны: circle и square", type=str
+    )
+    parser.add_argument(
+        "size", help="Радиус окружности или длина стороны квадрата.", type=str
+    )
+    parser.add_argument(
+        "color",
+        help="Цвет фигуры.",
+        type=str
+    )
+    parser.add_argument(
+        "filepath",
+        help="Путь и название файла.",
+        type=str,
+        nargs="?",
+        default="./result.svg"
+    )
+    arguments = parser.parse_args()
+
     try:
-        xml_string = get_xml_for_convert("square", "250px", "#00000")
+        xml_string = get_xml_for_convert(
+            arguments.figure,
+            arguments.size,
+            arguments.color
+        )
     except KeyError:
         logger.error(
             "Такая фигура не поддерживается. Используйте circle или square."
         )
     else:
-        with open("file.svg", "w") as file:
+        with open(arguments.filepath, "w") as file:
             file.write(xml_string)
 
 
