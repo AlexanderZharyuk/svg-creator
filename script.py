@@ -7,7 +7,7 @@ from textwrap import dedent
 logging_format = "[%(levelname)s] %(message)s"
 logging.basicConfig(format=logging_format)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.ERROR)
+logger.setLevel(logging.INFO)
 
 
 def get_xml_for_convert(figure: str, size: str, color: str) -> str:
@@ -74,6 +74,7 @@ def main() -> None:
     else:
         with open(arguments.filepath, "w") as file:
             file.write(xml_string)
+        logger.info("Файл сохранен!")
 
 
 if __name__ == "__main__":
